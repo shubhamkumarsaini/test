@@ -1,0 +1,19 @@
+{% extends 'home.html' %}
+
+{% block custom_css %}
+
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Your Statistics</h2>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h5 class="card-title">Statistics Overview</h5>
+        <p>Total Games Played: {{ stats.total_games_played }}</p>
+        <p>Total Correct Guesses: {{ stats.total_correct_guesses }}</p>
+        <p>Current Win Streak: {{ stats.win_streak }}</p>
+        <p>Highest Win Streak: {{ stats.highest_win_streak }}</p>
+    </div>
+</div>
+{% endblock %}

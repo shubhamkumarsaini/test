@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-container {
+    display: flex;
+}
+
+.admin-sidebar {
+    width: 250px;
+    background: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+.admin-sidebar h2 {
+    color: #ff9c00;
+}
+
+.admin-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.admin-sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.admin-main-content {
+    flex: 1;
+    padding: 20px;
+    background: #f4f4f4;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.admin-content {
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table th {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #ff9c00;
+}
+
+.btn-success {
+    background-color: #28a745;
+}

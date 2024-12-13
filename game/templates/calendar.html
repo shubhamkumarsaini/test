@@ -1,0 +1,625 @@
+{% extends 'home.html' %}
+
+{% block title %}
+<title>calender</title>
+{% endblock %}
+
+{% block custom_css %}
+<style>
+    /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Archive Section Styling */
+.ArchiveSection {
+    padding: 20px 0;
+    background-color: #f8f9fa;
+}
+
+.ArchiveSection .container {
+    margin: 0 auto;
+}
+
+/* Banner Styling */
+.addBanner {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.addBanner i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+}
+
+.addBanner img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+.ArchiveHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.backMenu a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+}
+
+.backMenu a:hover {
+    text-decoration: underline;
+}
+
+.centerHeading {
+    font-weight: 600;
+    font-size: 20px;
+    color: #333;
+}
+
+/* Random Movie Button Styling */
+.RandomMovieBtn {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #343a40;
+    color: #fff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.RandomMovieBtn:hover {
+    background-color: #ffc107;
+    color:#343a40;
+}
+
+/* Random Number Styling */
+.RandomNumberMain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .RandomNumberInner {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    height: 400px; /* Fixed height */
+    overflow-y: auto; /* Scrollable if content overflows */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #343a40;
+  }
+  
+  .RandomNumbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .RandomNumbers:hover {
+    background-color: #343a40;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="ArchiveSection">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <!-- Banner Section -->
+          <div class="addBanner">
+            <img class="w-100" src="/static/image/addBanner.jpg" alt="Banner" />
+          </div>
+          
+          <!-- Archive Section Inner -->
+          <div class="ArchiveSectionInner">
+            <!-- Header Section -->
+            <div class="ArchiveHeader row">
+                <div class="backMenu col-4">
+                    <a href="/">
+                        <span><i class="fa-sharp fa-light fa-arrow-left pe-2"></i>Home</span>
+                    </a>
+                </div>
+                <h3 class="text-center">Past Games</h3>
+                <div class="centerHeading col-4 text-center fw-semibold fs-5">Archive</div>
+            </div>
+  
+            <!-- Random Movie Button -->
+            <a href="{% url 'past_game' random_game %}">
+                <div class="RandomMovieBtn">
+                    Random Movie
+                </div>
+            </a>
+  
+            <!-- Random Number Section -->
+            <div class="RandomNumberMain">
+                <div class="RandomNumberInner">
+                    {% for game in past_games %}
+                    <!-- Example: Replace with dynamic data -->
+                    <a href="{% url 'past_game' game.id %}" class="RandomNumbers">{{ game.id }}
+                        <p>{{ game.date }} - {{ game.episode.show.title }}</p>
+                    </a>
+                    {% endfor %}
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% comment %} <h2 class="text-center">Past Games</h2>
+<p class="text-muted text-center">Relive the past challenges!</p>
+
+<ul class="list-group mt-4">
+    {% for game in past_games %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ game.date }} - {{ game.episode.show.title }}
+            <a href="{% url 'past_game' game.id %}" class="btn btn-secondary btn-sm">{{ game.id }}</a>
+        </li>
+    {% endfor %}
+</ul> {% endcomment %}
+{% endblock %}
+
+{% block custom_js %}
+    
+{% endblock %}
+
+
+{% comment %} {% extends 'home.html' %}
+
+{% block custom_css %}
+<style>
+    #answerIndicators {
+        display: flex;
+        gap: 4px; /* Adjust for small screens */
+        justify-content: center; /* Center the circles horizontally */
+    }
+    
+    #answerIndicators > div {
+        width: 23px; /* Default size (small) */
+        height: 23px;
+        background-color: #c9c0c0; /* Tailwind's 'red-700' */
+        border-radius: 9999px; /* Full rounding for a circle */
+        border: 2px solid black; /* Black border around each circle */
+    }
+    
+    @media (min-width: 640px) {
+        #answerIndicators {
+            gap: 8px; /* Increased spacing on larger screens */
+        }
+        #answerIndicators > div {
+            width: 23px; /* Larger size for medium screens */
+            height: 23px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<h2 class="text-center">Guess the TV Show</h2>
+<p class="text-center text-muted">Can you guess this 70s or 80s TV show from the images below?</p>
+
+<div class="row justify-content-center">
+    <!-- Display only the current image -->
+    {% for image in images %}
+        <div class="col-md-8 mb-3 image-container {% if forloop.counter != 1 %}d-none{% endif %}" id="image-{{ forloop.counter }}">
+            <img src="{{ image.image.url }}" class="img-fluid rounded" alt="Episode Image {{ forloop.counter }}" style="height: 350px;width: 730px;">
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Navigation buttons for images -->
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div id="imageButtons">
+            <button class="btn btn-outline-secondary mb-3 d-none" id="button-1" onclick="showImage(1)">1</button>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        
+        <form id="guessForm" class="mt-2" action="{% url 'submit_guess' game.id %}" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" id="guess" name="guess" class="form-control" placeholder="Enter the TV show name">
+                <button type="submit" class="btn btn-primary">Submit Guess</button>
+            </div>
+            <div class="guesses">
+                <p class="mt-2">6 GUESSES REMAINING</p>
+            </div>    
+        </form>
+        
+        <!-- Centered feedback message -->
+        <div id="feedback" class="mt-3 alert text-center">   </div>
+        <div id="todayresult" class="mt-3 alert d-none text-center">
+            <div class="flex flex-col items-center gap-1 mt-1 sm:gap-2 sm:mt-2 text-slate-200 sm:mb-6 mb-4">
+                <div class="flex flex-col items-center">
+                    <p class="text-sm text-slate-400 sm:text-base">THE ANSWER WAS:</p>
+                    <p class="text-lg font-semibold sm:text-xl" id="answerText">{{message}}</p>
+                </div>
+                <div class="flex gap-1 sm:gap-2 justify-center" id="answerIndicators">
+                </div>
+            </div>
+            <div class="flex gap-2 mt-1">
+                <button class="text-sm cursor-pointer text-slate-300 bg-slate-600 rounded px-2 py-1" onclick="toggleFeedbackClass()">SHOW GUESSES</button>
+                <button class="px-2 py-1 text-sm text-center rounded bg-slate-600 text-neutral-50 hover:bg-slate-700 active:bg-slate-800" onclick="copyResult()">SHARE</button>
+                <div id="feedbackhistory" class="text-slate-800 bg-slate-200 rounded p-2 d-none">
+                    <!-- Feedback content will be dynamically added here -->
+                </div>
+            </div>
+            <div class="flex items-center gap-5">
+                <div class="flex flex-col items-center mt-1 w-24">
+                    <div class="text-sm text-slate-500 sm:text-base">Next Movie:</div>
+                    <div class="text-base font-medium tracking-wide sm:text-lg sm:tracking-widest" id="nextMovieTimer">05:50:11</div>
+                </div>
+                <div class="w-[2px] h-10 bg-slate-600"></div>
+                <div class="flex gap-2">
+                    <a class="px-2 py-1 text-sm text-center rounded bg-red-700 text-neutral-50 hover:bg-red-800 active:bg-red-900" href="#">MORE GAMES →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+{% block custom_js %}
+<script>
+    let currentImageIndex = 1;
+    const maxAttempts = 6;
+    let remainingGuesses = maxAttempts;
+    const feedback = document.getElementById('feedback');
+    const guessesElement = document.querySelector('.guesses p');
+    const answerText = document.getElementById('answerText');
+    const answerIndicators = document.getElementById('answerIndicators');
+    const nextMovieTimer = document.getElementById('nextMovieTimer');
+    // Get today's date in YYYY-MM-DD format
+    function getTodayDate() {
+        const today = new Date();
+        return today.toISOString().split('T')[0];
+    }
+
+    // Function to get cookies
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Function to set cookies
+    function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        const expires = `expires=${date.toUTCString()}`;
+        document.cookie = `${name}=${value};${expires};path=/`;
+    }
+
+    // Function to parse JSON cookie and filter by today's date
+    function parseJSONCookie(name) {
+        const cookieValue = getCookie(name);
+        if (!cookieValue) return [];
+
+        const data = JSON.parse(cookieValue);
+        const today = getTodayDate();
+
+        // Filter guesses to include only those from today
+        return data.filter(guess => guess.date === today);
+    }
+
+    // Function to add a new guess with today's date
+    function addGuessToCookie(guessText, result,message,current_attempt,remaining_attempts,image_to_show) {
+        const guesses = parseJSONCookie('guess_history') || [];
+        const today = getTodayDate();
+
+        // Add the new guess with today's date
+        guesses.push({ date: today, text: guessText, result: result, message: message, current_attempt: current_attempt, remaining_attempts: remaining_attempts, image_to_show: image_to_show });
+
+        // Save updated guesses to cookie
+        setCookie('guess_history', JSON.stringify(guesses), 1); // Save for 1 day
+    }
+
+
+
+    // Update feedback to show today's guesses
+    function updateFeedback(guesses) {
+        const feedback = document.getElementById('feedback'); // Feedback container
+        
+        // Clear previous feedback
+        feedback.innerHTML = '';
+        
+        // Create a flex container to hold all the guess items
+        const feedbackContainer = document.createElement('div');
+        feedbackContainer.classList.add('flex', 'flex-col', 'text-center');
+        
+        // Loop through each guess and create a div
+        guesses.forEach((guess, index) => {
+            const guessDiv = document.createElement('div');
+            guessDiv.classList.add('flex', 'items-center', 'justify-center', 'mb-2'); // Align items in one line
+            
+            // Create a single div to hold both ❌/✅ and guess text
+            guessDiv.innerHTML = `${guess.result === 'correct' ? '✅' : '❌'}&nbsp;&nbsp;${index + 1}. ${guess.text}`;
+            
+            // Append this guess div to the feedback container
+            feedbackContainer.appendChild(guessDiv);
+        });
+    
+        // Append the feedback container to the feedback div
+        feedback.appendChild(feedbackContainer);
+    }
+
+    // Show the specified image by index
+    function showImage(index) {
+        document.querySelectorAll('.image-container').forEach(image => image.classList.add('d-none'));
+        document.getElementById(`image-${index}`).classList.remove('d-none');
+        currentImageIndex = index;
+
+        // Save current image index to local storage
+        localStorage.setItem('currentImageIndex', currentImageIndex);
+    }
+
+    // Update image navigation buttons
+    function updateImageButtons(maxVisibleIndex) {
+        const imageButtonsContainer = document.getElementById('imageButtons');
+        
+        Array.from(imageButtonsContainer.children).forEach(button => {
+            const buttonIndex = parseInt(button.textContent, 10);
+            if (buttonIndex > maxVisibleIndex) {
+                button.classList.add('d-none');
+            } else {
+                button.classList.remove('d-none');
+            }
+        });
+
+        for (let i = 1; i <= maxVisibleIndex; i++) {
+            let button = document.getElementById(`button-${i}`);
+            if (!button) {
+                button = document.createElement('button');
+                button.className = 'btn btn-outline-secondary mb-3';
+                button.id = `button-${i}`;
+                button.textContent = i;
+                button.onclick = () => showImage(i);
+                imageButtonsContainer.appendChild(button);
+            }
+        }
+    }
+    
+    function toggleFeedbackClass() {
+        const feedbackElement = document.getElementById('feedback'); // Element holding the data
+        const feedbackHistoryElement = document.getElementById('feedbackhistory'); // Target container
+    
+        if (feedbackHistoryElement.classList.contains('d-none')) {
+            feedbackHistoryElement.classList.remove('d-none'); // Show feedbackhistory
+            feedbackHistoryElement.innerHTML = feedbackElement ? feedbackElement.innerHTML : "No feedback available."; // Set content
+        } else {
+            feedbackHistoryElement.classList.add('d-none'); // Hide feedbackhistory
+        }
+    }
+        
+    // Update today's result section
+    function updateTodayResult() {
+        const guesses = parseJSONCookie('guess_history');
+        const correctGuessIndex = guesses.findIndex(guess => guess.result === 'correct');
+    
+        // Generate 6 divs
+        const divs = Array.from({ length: 6 }).map((_, index) => {
+            if (index < guesses.length) {
+                const guess = guesses[index];
+                return `
+                    <div class="w-3 h-3" style="background-color: ${guess.result === 'correct' ? '#08c10e' : '#c10808'}; 
+                        border-radius: 50%; gap: 4px; border: 2px solid black; width: 20px; height: 20px;">
+                    </div>`;
+            } else {
+                // Neutral for unused attempts
+                return `
+                    <div class="w-3 h-3" style="background-color: #cccccc; 
+                        border-radius: 50%; gap: 4px; border: 2px solid black; width: 20px; height: 20px;">
+                    </div>`;
+            }
+        }).join('');
+    
+        // Set the indicators
+        const answerText = document.getElementById('answerText');
+        const answerIndicators = document.getElementById('answerIndicators');
+    
+        if (correctGuessIndex !== -1) {
+            answerText.textContent = "You got it!";
+        } else {
+            const lastGuess = guesses[guesses.length - 1];
+            answerText.textContent = lastGuess.message;
+        }
+    
+        answerIndicators.innerHTML = divs;
+    
+        // Show the todayresult section
+    }
+    
+
+    function copyResult() {
+        const guesses = parseJSONCookie('guess_history'); // Assuming parseJSONCookie exists
+        const correctGuessIndex = guesses.findIndex(guess => guess.result === 'correct');
+    
+        // Determine guess indicators
+        const indicators = guesses.map(guess => (guess.result === 'correct' ? "🟢" : "🔴")).join(" ");
+        const remainingIndicators = Array(6 - guesses.length).fill("⚪").join(" "); // Empty slots
+        const allIndicators = `${indicators} ${remainingIndicators}`.trim();
+    
+        // Build the result text
+        const gameId = "{{ game.id }}";
+        const resultText = `Shubham #${gameId}\n🎥 ${allIndicators}\n\nhttp://127.0.0.1:8000/`;
+    
+        // Copy the result to clipboard
+        navigator.clipboard.writeText(resultText).then(() => {
+            // Change the button text to "Copied" for 5 seconds
+            const shareButton = document.querySelector('button[onclick="copyResult()"]');
+            if (shareButton) {
+                const originalText = shareButton.textContent;
+                shareButton.textContent = "Copied";
+                shareButton.disabled = true; // Optionally disable the button to prevent repeated clicks
+                setTimeout(() => {
+                    shareButton.textContent = originalText;
+                    shareButton.disabled = false; // Re-enable the button
+                }, 2000);
+            }
+        }).catch(err => {
+            console.error("Failed to copy text:", err);
+        });
+    }
+    
+
+    // Countdown timer for the next movie
+    function startCountdown() {
+        const targetTime = new Date().setHours(24, 0, 0, 0); // Set to midnight
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = targetTime - now;
+
+            if (distance < 0) {
+                nextMovieTimer.textContent = "00:00:00";
+                clearInterval(timerInterval);
+                return;
+            }
+
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            nextMovieTimer.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+        updateTimer(); // Run once immediately
+    }
+    
+    // Function to update the remaining guesses
+    function updateRemainingGuesses() {
+        guessesElement.textContent = `${remainingGuesses} GUESSES REMAINING`;
+    }
+
+    // Handle form submission
+    document.getElementById('guessForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const guessInput = document.getElementById('guess');
+        const guess = guessInput.value;
+
+        fetch("{% url 'submit_guess' game.id %}", {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+            body: new URLSearchParams({ 'guess': guess })
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            if (data.result === 'correct') {
+                updateImageButtons(6);
+                document.getElementById('guessForm').classList.add('d-none'); // Hide the form
+                document.getElementById('todayresult').classList.remove('d-none');
+                document.getElementById('feedback').classList.add('d-none');
+            } else {
+                if (currentImageIndex < maxAttempts) {
+                    currentImageIndex += 1;
+                    showImage(currentImageIndex);
+                    updateImageButtons(currentImageIndex);
+                }
+            }
+            // Decrease remaining guesses and update the UI
+            remainingGuesses -= 1;
+            updateRemainingGuesses();
+
+            // Save the current guess to the cookie
+            addGuessToCookie(guess, data.result,data.message,data.current_attempt,data.remaining_attempts,data.image_to_show);
+            
+            // Update feedback with today's guesses
+            const todaysGuesses = parseJSONCookie('guess_history');
+            updateFeedback(todaysGuesses);
+            updateTodayResult();
+            
+            // Check if there are no guesses left and the game is not won
+            if (remainingGuesses <= 0 && data.result !== 'correct') {
+                document.getElementById('guessForm').classList.add('d-none'); // Hide the form
+                document.getElementById('feedback').classList.add('d-none');
+                document.getElementById('todayresult').classList.remove('d-none');
+            }
+            // Clear the input field after submission
+            guessInput.value = '';
+        });
+    });
+
+    // On page load: load today's guesses and show the correct image and buttons
+    document.addEventListener('DOMContentLoaded', () => {
+        const todaysGuesses = parseJSONCookie('guess_history');
+
+        // Retrieve current image index from local storage or initialize to 1
+        currentImageIndex = parseInt(localStorage.getItem('currentImageIndex')) || 1;
+        // Set the remaining guesses based on today's guesses
+        remainingGuesses -= todaysGuesses.length;
+        if (remainingGuesses === 6) {
+            currentImageIndex = 1;
+            localStorage.setItem('currentImageIndex', currentImageIndex); // Persist the value in local storage
+        }
+        updateRemainingGuesses(); 
+
+        // Update feedback with today's guesses
+        if (todaysGuesses.length) updateFeedback(todaysGuesses);
+        // Ensure the correct image is displayed
+        showImage(currentImageIndex);
+        
+        // Update image buttons up to the current visible index
+        updateImageButtons(currentImageIndex);
+
+        startCountdown();
+        updateTodayResult();
+        // If no guesses left and the game wasn't won, show Game Over
+        if (remainingGuesses <= 0 && !todaysGuesses.some(guess => guess.result === 'correct')) {
+            document.getElementById('guessForm').classList.add('d-none'); // Hide the form
+            document.getElementById('feedback').classList.add('d-none');
+            document.getElementById('todayresult').classList.remove('d-none');
+        }
+        if (todaysGuesses.some(guess => guess.result === 'correct')) {
+            // If a correct guess exists, display the final image buttons
+            updateImageButtons(6);
+            document.getElementById('guessForm').classList.add('d-none'); // Hide the form
+            document.getElementById('feedback').classList.add('d-none');
+            document.getElementById('todayresult').classList.remove('d-none');
+        }
+    });
+</script>    
+{% endblock %} {% endcomment %}

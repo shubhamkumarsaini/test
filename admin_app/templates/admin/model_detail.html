@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<div class="model-detail">
+    <h2>{{ model_name }} Details</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Title:</label>
+        <input type="text" name="title" value="{{ item.title }}">
+        <label>Description:</label>
+        <textarea name="description">{{ item.description }}</textarea>
+        <!-- Add more fields as required -->
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</div>
+{% endblock %}

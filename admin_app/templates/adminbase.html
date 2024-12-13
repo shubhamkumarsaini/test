@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+  
+        {% endblock %}
+  
+     </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href='/static/css/styles.css'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block custom_css %}
+
+    {% endblock %}
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="sidebar-menu">
+                {% comment %} <li><a href="{% url 'admin:dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'admin:tvshow_list' %}">TV Shows</a></li> {% endcomment %}
+                {% comment %} <li><a href="#">Settings</a></li> {% endcomment %}
+                {% comment %} <li><a href="{% url 'admin:logout' %}">Logout</a></li> {% endcomment %}
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="content">
+            <header>
+                <h1>{% block header %}Dashboard{% endblock %}</h1>
+            </header>
+            <div class="main-content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src='/static/js/scripts.js'></script>
+    {% block custom_js %}
+    {% endblock %}
+</body>
+</html>

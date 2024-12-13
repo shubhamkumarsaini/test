@@ -1,0 +1,30 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<div class="model-list">
+    <h2>{{ model_name }} List</h2>
+    <a href="{% url 'admin_model_add' model_name %}" class="btn btn-primary">Add New {{ model_name }}</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
+                <td>
+                    <a href="{% url 'admin_model_detail' model_name item.id %}">View</a>
+                    <a href="{% url 'admin_model_edit' model_name item.id %}">Edit</a>
+                    <a href="{% url 'admin_model_delete' model_name item.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

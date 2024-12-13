@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <h2>My Admin</h2>
+            <ul>
+                <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'admin_model_list' 'TVShow' %}">TV Shows</a></li>
+                <li><a href="{% url 'admin_model_list' 'Genre' %}">Genres</a></li>
+                <!-- Add more model links here -->
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main-content">
+            <!-- Top Navigation -->
+            <header class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <div class="admin-user-info">
+                    <span>Welcome, {{ user.username }}</span>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="admin-content">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    
+    <script src="{% static 'js/admin.js' %}"></script>
+</body>
+</html>
